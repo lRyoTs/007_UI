@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,37 +10,41 @@ public class GameManager : MonoBehaviour
     private float minY = -3.75f;
     private float distanceBetweenSquares = 2.5f;
 
-    public bool isGameOver;
-    public float spawnRate = 2f;
-    public List<Vector3> targetPositionsInScene;
-    public Vector3 randomPos;
+    public bool isGameOver; //Game status
+    public float spawnRate = 2f; //Time between spawns
+    public List<Vector3> targetPositionsInScene; //store position already busy
+    public Vector3 randomPos; //Store a random position
+
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
+    public GameObject gameOverPanel;
+    public GameObject startGamePanel;
 
     // Start is called before the first frame update
     void Start()
     {
         isGameOver = false;
         StartCoroutine("SpawnRandomTarget");
+        scoreText.text = $"Score:\n{score}";
+        startGamePanel
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private Vector3 RandomSpawnPosition() {
         float spawnPosX = minX + Random.Range(0, 4) * distanceBetweenSquares;
         float spawnPosY = minY + Random.Range(0, 4) * distanceBetweenSquares;
         return new Vector3(spawnPosX, spawnPosY, 0);
     }
-
+    
+    //Coroutine
     private IEnumerator SpawnRandomTarget() {
+        //Check if is NOT Game Over
         while (!isGameOver) {
-            yield return new WaitForSeconds(spawnRate);
+            yield return new WaitForSeconds(spawnRate); //Wait before spawn
             int randomIndex = Random.Range(0, targetPrefabs.Length);
             randomPos = RandomSpawnPosition();
 
-            //Check if the position is already busy
+            //Check if the position is not already busy
             while (targetPositionsInScene.Contains(randomPos)) {
                 randomPos = RandomSpawnPosition(); //Search new position
             }
@@ -47,5 +52,17 @@ public class GameManager : MonoBehaviour
             Instantiate(targetPrefabs[randomIndex], randomPos, targetPrefabs[randomIndex].transform.rotation);
             targetPositionsInScene.Add(randomPos); //Add new Position
         }
+    }
+
+    //Public function that increase socre value
+    public void UpdateScore(int newPoints) {
+        score += newPoints;
+        scoreText.text = $"Score:\n{score}";
+    }
+
+    //Public function that manage Game Over
+    public void GameOver() {
+        isGameOver = true;
+        gameOverPanel.SetActive(true);
     }
 }

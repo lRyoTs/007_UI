@@ -5,7 +5,9 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float lifeTime = 2f;
+    public int points = 5;
     private GameManager gameManager;
+    public GameObject explosionParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +19,18 @@ public class Target : MonoBehaviour
     //Function that destroy when the user press the object
     private void OnMouseDown()
     {
-        if (gameObject.CompareTag("Bad")) {
-            gameManager.isGameOver = true; //GAME OVER
+        if (!gameManager.isGameOver) {
+            if (gameObject.CompareTag("Bad")) {
+                gameManager.GameOver();
+            }
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            gameManager.UpdateScore(points);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+
     }
 
+    //When game Object is Destroy()
     private void OnDestroy()
     {
         gameManager.targetPositionsInScene.Remove(transform.position); //Remove position from List

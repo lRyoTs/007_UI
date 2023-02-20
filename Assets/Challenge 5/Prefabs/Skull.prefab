@@ -128,3 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 2
+  points: 0
+  explosionParticle: {fileID: 8328426341284958323, guid: ad604245d81df4d9faffb305340f5797, type: 3}

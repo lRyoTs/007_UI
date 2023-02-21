@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DifficultyButton : MonoBehaviour
 {
-    public int difficulty;
-    private Button _button;
+    public int difficulty; //Set difficulty 1 (Easy) / 2 (Normal) / 3 (Hard)
+    private Button _button; //Store button
     private GameManager gameManager;
 
     //Initialize own components

@@ -27,14 +27,14 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    //FUnction that gets a random position to spawn
     private Vector3 RandomSpawnPosition() {
         float spawnPosX = minX + Random.Range(0, 4) * distanceBetweenSquares;
         float spawnPosY = minY + Random.Range(0, 4) * distanceBetweenSquares;
         return new Vector3(spawnPosX, spawnPosY, 0);
     }
 
-    //Coroutine
+    //Coroutine 
     private IEnumerator SpawnRandomTarget() {
         //Check if is NOT Game Over
         while (!isGameOver) {
@@ -68,10 +68,10 @@ public class GameManager : MonoBehaviour
     public void StartGame(int difficulty)
     {
         isGameOver = false;
-        score = 0;
-        spawnRate /= difficulty;
+        score = 0; //Initialize score to 0
+        spawnRate /= difficulty; //Set spawnRate difficulty
         StartCoroutine(SpawnRandomTarget());
-        scoreText.text = $"Score:\n{score}";
+        scoreText.text = $"Score:\n{score}"; //Display score
         startGamePanel.SetActive(false);
         gameOverPanel.SetActive(false);
     }

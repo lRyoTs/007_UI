@@ -19,6 +19,7 @@ public class Target : MonoBehaviour
     //Function that destroy when the user press the object
     private void OnMouseDown()
     {
+        //CHeck if is GameOver
         if (!gameManager.isGameOver) {
             if (gameObject.CompareTag("Bad")) { //Pressed Wrong
                 gameManager.GameOver();

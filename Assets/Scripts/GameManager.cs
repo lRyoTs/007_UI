@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,10 +24,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isGameOver = false;
-        StartCoroutine("SpawnRandomTarget");
-        scoreText.text = $"Score:\n{score}";
-        startGamePanel
+
     }
 
 
@@ -35,7 +33,7 @@ public class GameManager : MonoBehaviour
         float spawnPosY = minY + Random.Range(0, 4) * distanceBetweenSquares;
         return new Vector3(spawnPosX, spawnPosY, 0);
     }
-    
+
     //Coroutine
     private IEnumerator SpawnRandomTarget() {
         //Check if is NOT Game Over
@@ -64,5 +62,23 @@ public class GameManager : MonoBehaviour
     public void GameOver() {
         isGameOver = true;
         gameOverPanel.SetActive(true);
+    }
+
+    //Function that select dificulty
+    public void StartGame(int difficulty)
+    {
+        isGameOver = false;
+        score = 0;
+        spawnRate /= difficulty;
+        StartCoroutine(SpawnRandomTarget());
+        scoreText.text = $"Score:\n{score}";
+        startGamePanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+    }
+
+    //Function that Restart game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Load same scene
     }
 }

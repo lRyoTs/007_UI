@@ -6,7 +6,4 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
 
-    public void RestartGame() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Load same scene
-    }
 }

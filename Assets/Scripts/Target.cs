@@ -5,7 +5,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     public float lifeTime = 2f;
-    public int points = 5;
+    public int points = 5;  //Store object's points
     private GameManager gameManager;
     public GameObject explosionParticle;
 
@@ -20,11 +20,11 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         if (!gameManager.isGameOver) {
-            if (gameObject.CompareTag("Bad")) {
+            if (gameObject.CompareTag("Bad")) { //Pressed Wrong
                 gameManager.GameOver();
             }
-            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
-            gameManager.UpdateScore(points);
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation); //Activate SystemParticle (destroys itself at end)
+            gameManager.UpdateScore(points); //Update score
             Destroy(gameObject);
         }
 
